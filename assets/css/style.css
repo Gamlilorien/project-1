@@ -1,0 +1,18 @@
+/* Date Picker adjustments */
+.datepicker-date-display {
+    display: none;
+}
+
+/* left margin 2rem, created initally for form checkboxes */
+.lm2 {
+    margin-left: 2rem;
+}
+
+.brand-logo {
+    margin-left: 1rem;
+}
+
+header {
+    background-image: url("../images/banner-2.jpg");
+    height: 25%;
+}

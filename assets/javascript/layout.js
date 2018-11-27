@@ -43,3 +43,9 @@ $(document).ready(function(){
       i18n: inter_es
     });
   });
+
+  // Mobile Side Navigation Menu
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+      

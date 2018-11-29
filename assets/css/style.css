@@ -16,3 +16,10 @@ header {
     background-image: url("../images/banner-2.jpg");
     height: 25%;
 }
+
+/* added for recreation API results to not be so giagantic! */
+h2 {
+    font-size: 1.6rem;
+    margin-top: 1.5rem;
+    margin-bottom: .5rem;
+}

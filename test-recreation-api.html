@@ -33,10 +33,11 @@
  <!-- MODAL Search Popup window -->
  <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Find Rec Areas</h4>
+    <h4>Find New Trails</h4>
       <form id="searchForm">
-          <input id="search2" type="text" required>
-          <label class="label-icon" for="search2"><i class="material-icons">gps_fixed</i></label>
+
+          <input id="search2" type="text" required="">
+          <label class="label-icon" for="search2"><i class="material-icons">gps_fixed</i> Location Name, Area, City, or Keyword</label>
         <p>Activities</p>
           <label class="lm2">
             <input type="checkbox" class="filled-in" checked="checked" id="hiking-checkbox" value="HIKING"/>
@@ -51,8 +52,8 @@
             <span>Camping</span>
           </label>
         <p>Desired Date</p>
-          <input class="datepicker" id="searchDate" type="text" required>
-          <label class="label-icon" for="searchDate"><i class="material-icons">date_range</i></label>
+          <input class="datepicker" id="searchDate" type="text" required="">
+          <label class="label-icon" for="searchDate"><i class="material-icons">date_range</i> ie the date you plan on going</label>
         <br>
         <br>
           <a href="#!" id="RecSearchButton" class="modal-close waves-effect waves-green waves-light btn">Search</a>
@@ -61,42 +62,19 @@
 </div>
 
 
+    <!-- Begin main row container -->
+    <div class="row">
+      <div class="col s12">
+          <ul class="collapsible popout" id="accordian">
+              <!-- BEGIN search results go here -->
+                 
+          </ul>
 
-<!-- <script type="text/javascript">
-  //addtional notes
-  //FacilityTypeDescription: "Facility" is a generic description that seems to apply to everything BUT "Campgrounds"
-  //Example Lat and Long
-  //FacilityLatitude: 39.994118 
-  //FacilityLongitude: -105.633991
+  <!-- End main container -->
+      </div>
+  </div>
 
-  //ie campsites, facilities (ie places, also allows for a query= search), and recareas
-  // var endPoint = "facilities";
-  //***QUERY option is ONLY valid for facilities endPoint
-  //query input from user
-  var queryInput = "Boulder";
-  var query = "query=" +queryInput +"&";
-  var limit = 50;
-  var offset = 0;
-  var state = "CO";
-  //activities are comma seperated and you can either use the activity name or it's ID.
-  //Biking = 5, Camping = 9, Hiking = 14
-  var activities = "HIKING,BIKING";
-  var apikey = "0bde3bb5-6af0-4171-8311-755a6fb73015";
-  var queryURL = "https://ridb.recreation.gov/api/v1/" + endPoint +"?" +query +"limit=" + limit +"&offset=" +offset +"&state=" +state +"&activity=" +activities +"&apikey=" +apikey;
-  console.log(queryURL);
 
-//Settings for API CAll
-var settings = {
-  "url": queryURL,
-  "method": "GET"
-}
-
-$.ajax(settings).done(function (response) {
-  recAreas = response.RECDATA;
-  console.log(recAreas);
-});
-
-</script> -->
     <script type="text/javascript" src="assets/javascript/layout.js"></script>
     <script type="text/javascript" src="assets/javascript/google-maps.js"></script>
     <script type="text/javascript" src="assets/javascript/recreation.js"></script>

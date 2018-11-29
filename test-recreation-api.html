@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Test recreation API</title>
+</head>
+<body>
+    
+<!-- HEADER -->
+<header>
+      
+</header>
+
+
+<!-- Nav Bar -->
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Hiking Trails</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li class="active"><a href="index.html"><i class="material-icons">home</i></a></li>
+        <li><a class="modal-trigger" href="#modal1"><i class="material-icons">search</i></a></li>
+        <li><a href="account.html"><i class="material-icons">account_circle</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+ <!-- MODAL Search Popup window -->
+ <div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Find Rec Areas</h4>
+      <form id="searchForm">
+          <input id="search2" type="text" required>
+          <label class="label-icon" for="search2"><i class="material-icons">gps_fixed</i></label>
+        <p>Activities</p>
+          <label class="lm2">
+            <input type="checkbox" class="filled-in" checked="checked" id="hiking-checkbox" value="HIKING"/>
+            <span>Hiking</span>
+          </label>
+          <label class="lm2">
+            <input type="checkbox" class="filled-in" id="biking-checkbox" value="BIKING"/>
+            <span>Biking</span>
+          </label>
+          <label class="lm2">
+            <input type="checkbox" class="filled-in" id="camping-checkbox" value="CAMPING"/>
+            <span>Camping</span>
+          </label>
+        <p>Desired Date</p>
+          <input class="datepicker" id="searchDate" type="text" required>
+          <label class="label-icon" for="searchDate"><i class="material-icons">date_range</i></label>
+        <br>
+        <br>
+          <a href="#!" id="RecSearchButton" class="modal-close waves-effect waves-green waves-light btn">Search</a>
+      </form>
+  </div>
+</div>
+
+
+
+<!-- <script type="text/javascript">
+  //addtional notes
+  //FacilityTypeDescription: "Facility" is a generic description that seems to apply to everything BUT "Campgrounds"
+  //Example Lat and Long
+  //FacilityLatitude: 39.994118 
+  //FacilityLongitude: -105.633991
+
+  //ie campsites, facilities (ie places, also allows for a query= search), and recareas
+  // var endPoint = "facilities";
+  //***QUERY option is ONLY valid for facilities endPoint
+  //query input from user
+  var queryInput = "Boulder";
+  var query = "query=" +queryInput +"&";
+  var limit = 50;
+  var offset = 0;
+  var state = "CO";
+  //activities are comma seperated and you can either use the activity name or it's ID.
+  //Biking = 5, Camping = 9, Hiking = 14
+  var activities = "HIKING,BIKING";
+  var apikey = "0bde3bb5-6af0-4171-8311-755a6fb73015";
+  var queryURL = "https://ridb.recreation.gov/api/v1/" + endPoint +"?" +query +"limit=" + limit +"&offset=" +offset +"&state=" +state +"&activity=" +activities +"&apikey=" +apikey;
+  console.log(queryURL);
+
+//Settings for API CAll
+var settings = {
+  "url": queryURL,
+  "method": "GET"
+}
+
+$.ajax(settings).done(function (response) {
+  recAreas = response.RECDATA;
+  console.log(recAreas);
+});
+
+</script> -->
+    <script type="text/javascript" src="assets/javascript/layout.js"></script>
+    <script type="text/javascript" src="assets/javascript/google-maps.js"></script>
+    <script type="text/javascript" src="assets/javascript/recreation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

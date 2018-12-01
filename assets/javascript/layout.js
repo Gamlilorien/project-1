@@ -48,4 +48,6 @@ $(document).ready(function(){
   $(document).ready(function(){
     $('.sidenav').sidenav();
   });
-      
+
+// Changing color of star icon
+

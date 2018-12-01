@@ -1,0 +1,162 @@
+<!DOCTYPE html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Trail Blazer</title>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <header id="banner">
+
+    </header>
+
+
+    <!-- Nav Bar -->
+    <nav>
+        <div class="nav-wrapper text">
+          <a href="#" class="brand-logo">Trail Blazer</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li class="active"><a href="index.html"><i class="material-icons">home</i></a></li>
+            <li><a class="modal-trigger" href="#modal1"><i class="material-icons">search</i></a></li>
+            <li><a href="account.html"><i class="material-icons">account_circle</i></a></li>
+          </ul>
+        </div>
+      </nav>
+    
+    <!-- This is the menu side nav on mobile -->
+      <ul class="sidenav text" id="mobile-demo">
+        <li class="active"><a href="index.html"><i class="material-icons">home</i>Home</a></li>
+        <li><a class="modal-trigger" href="#modal1"><i class="material-icons">search</i>Search</a></li>
+        <li><a href="account.html"><i class="material-icons">account_circle</i>Account</a></li>
+      </ul>
+
+        <!-- MODAL Search Popup window -->
+        <div id="modal1" class="modal">
+          <div class="modal-content text">
+            <h4>Find Rec Areas</h4>
+              <form>
+                  <input id="search2" type="text" required>
+                  <label class="label-icon" for="search2"><i class="material-icons">gps_fixed</i></label>
+                <p>Activities</p>
+                  <label class="lm2">
+                    <input type="checkbox" class="filled-in" checked="checked" />
+                    <span>Hiking</span>
+                  </label>
+                  <label class="lm2">
+                    <input type="checkbox" class="filled-in" />
+                    <span>Biking</span>
+                  </label>
+                  <label class="lm2">
+                    <input type="checkbox" class="filled-in" />
+                    <span>Camping</span>
+                  </label>
+                <p>Desired Date</p>
+                  <input class="datepicker" id="searchDate" type="text" required>
+                  <label class="label-icon" for="searchDate"><i class="material-icons">date_range</i></label>
+                <br>
+                <br>
+                  <a href="#!" class="modal-close waves-effect waves-green waves-light btn">Search</a>
+              </form>
+          </div>
+        </div>
+
+    <!-- Begin main row container -->
+    <div class="row">
+        <div class="col s12">
+            <ul class="collapsible popout ">
+                <!-- BEGIN search results go here -->
+                    <li class="active">
+                        <ul class="collapsible">
+                            <li>
+                              <div class="collapsible-header tab-titles" id="starColor"><i class="material-icons" >star_border</i>The Loch Trail</div>
+                              <div class="collapsible-body">
+                                <div class="row">
+                                  <div class="col l12">
+                                    <!-- Where park info/description will appear -->
+                                    <blockquote>
+                                        The hike to The Loch begins from the Glacier Gorge Trailhead, located on Bear Lake Road almost 8 miles from the turn-off at Highway 36. Due to the extreme popularity of the Bear Lake Road area you may want to consider using the free park shuttle to access the trailhead during peak season.
+                                      Roughly one-quarter of a mile from the parking area, just after crossing Chaos Creek, the trail briefly converges with the Glacier Creek Trail. After walking a very short distance the Glacier Creek Trail splits off to the right and heads toward Bear Lake. To continue on towards The Loch hikers should turn left at this junction.
+                                      
+                                      alberta-fallsAt just over eight-tenths of a mile hikers will reach Alberta Falls, one of the more popular hiking destinations in Rocky Mountain National Park. This scenic 30-foot waterfall thunders down a small gorge on Glacier Creek, and is named after Alberta Sprague, the wife of Abner Sprague, one of the first settlers in the Estes Park area.
+                                    </blockquote>
+                                     <!-- Button for opening a new window for info -->
+                                      <div>
+                                        <a class="waves-effect waves-light btn tab-buttons right"><i class="material-icons right">chevron_right</i>Learn More</a>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col l12">
+                                      <img class="materialboxed boxes" id="box-info" src="Untitled.png">
+                                      <img class="materialboxed boxes" id="box-info" src="weather-ex.jpg">
+                                  </div>
+                                </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header tab-titles"><i class="material-icons">star_border</i>Fourth of July Trailhead</div>
+                              <div class="collapsible-body">
+                                  <div class="row">
+                                    <div class="col l12">
+                                      <!-- Where park info/description will appear -->
+                                      <blockquote>
+                                          Located a few miles past the town of Eldora, the 4th of July trail is a portal to an amazing assortment of peaks, lakes and vast mountain scenery. The trail is named for the old 4th of July mine which is part of the many mine ruins along the way. As a gateway to the Indian Peaks Wilderness, this popular trail is ideal for day hikes, backcountry camping and mountain climbing.
+                                      </blockquote>
+                                       <!-- Button for opening a new window for info -->
+                                        <div>
+                                          <a class="waves-effect waves-light btn tab-buttons right"><i class="material-icons right">chevron_right</i>Learn More</a>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col l12">
+                                        <img class="materialboxed boxes" id="box-info" src="july.png">
+                                        <img class="materialboxed boxes" id="box-info" src="weather-ex.jpg">
+                                    </div>
+                                  </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header tab-titles"><i class="material-icons">star_border</i>St Marys Glacier</div>
+                              <div class="collapsible-body">
+                                  <div class="row">
+                                    <div class="col l12">
+                                      <!-- Where park info/description will appear -->
+                                      <blockquote>
+                                          The hike up to St. Mary’s Glacier ascends through a beautiful forest and ends with stunning panoramic views–the kind you expect from a perfect short hike in Colorado. If you walk around St. Mary’s lake then hike up the glacier, you will gain incredible views of the Rocky Mountains to the west. It is a quick hike–1.5 miles round-trip if you climb to the top, but only about 1 mile round trip if you only hike the lake and back. The St. Mary’s Glacier trailhead is about an hour from Denver and a great way to beat the summer heat, as there’s snow above the lake year-round.
+                                      </blockquote>
+                                       <!-- Button for opening a new window for info -->
+                                        <div>
+                                          <a class="waves-effect waves-light btn tab-buttons right"><i class="material-icons right">chevron_right</i>Learn More</a>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col l12">
+                                        <img class="materialboxed boxes" id="box-info" src="st_marys.png">
+                                        <img class="materialboxed boxes" id="box-info" src="weather-ex.jpg">
+                                    </div>
+                                  </div>
+                            </li>
+                          </ul>
+                  </ul>
+      </div>
+    </div>
+    <!-- End main container -->
+
+
+    <!-- Javascript links here -->
+    <script type="text/javascript" src="assets/javascript/layout.js"></script>
+    <script type="text/javascript" src="assets/javascript/google-maps.js"></script>
+    <script type="text/javascript" src="assets/javascript/recreation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

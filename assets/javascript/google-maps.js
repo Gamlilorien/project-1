@@ -5,9 +5,9 @@ var lat = 39.994118;
 var lng = -105.633991;
 
 function showMap (lat, lng) {
-
-    var lat = lat;
-    var lng = lng;
+    //these are unnecessary here
+    // var lat = lat;
+    // var lng = lng;
 
     var place = {lat: lat, lng: lng}
 
@@ -57,7 +57,20 @@ function showMap (lat, lng) {
 
 $(document).ready(function() {
     $("#genMap").on("click", showMap)
-   .then($("#find").on("click", findTrails))
+    // this line was causing an error, so I diabled for now JCMH
+  //  .then($("#find").on("click", findTrails))
+
 
   })
 
+  //ADDED by JCMH
+$(".collapsible-header").click(function(){
+  //we need to get the lat and long as parameters
+  //to do this we will take the accordian div id#
+  var i = $("#ID");
+  console.log("click! " +i);
+
+  var newLat = recAreas[i].FacilityLatitude;
+  var newLng = recAreas[i].FacilityLongitude;
+  showMap(newLat, newLng);
+})

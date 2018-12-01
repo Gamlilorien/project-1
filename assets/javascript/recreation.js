@@ -175,7 +175,7 @@ function buildAccordian () {
             // var mainRow = $("<div>").attr({"class": "row"})
             // var mainRowCol = $("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description))
             var moreButton = $("<div>").append(
-              $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
+              $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
             )
             var containerRow = $("<div>").attr({"class": "row"}).append(
               $("<div>").attr({"class": "col l6"}).append(
@@ -191,8 +191,9 @@ function buildAccordian () {
               $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).html(name),
               $("<div>").attr({"class": "collapsible-body"}).append(
                   containerRow,
-                  $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton))
-                  
+                  $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
+                  $("<div>").attr({"id": "map"}),
+                  //$("<button>").attr({"id": "genMap"}).html("Get Map")
                 )
             )
 

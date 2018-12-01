@@ -1,11 +1,29 @@
 
-//VARIABLES
+//***************************** */
+//GLOBAL VARIABLES
+//searchDate
+//
 
 
+//***************************** */
+//FIREBASE
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDLWK0AgV3ynxApEe74ywNZQM7HEV_-IcM",
+  authDomain: "hiking-trails-222819.firebaseapp.com",
+  databaseURL: "https://hiking-trails-222819.firebaseio.com",
+  projectId: "hiking-trails-222819",
+  storageBucket: "hiking-trails-222819.appspot.com",
+  messagingSenderId: "172585916997"
+};
+firebase.initializeApp(config);
+
+var database = firebase.database();
+console.log(database);
+
+
+//*************************** */
 //FUNCTIONS
-
-
-
 function captureSearch() {
           //FUNCTION: to capture search values and either pass to other APIs or save as local values
           var search2 = $("#search2").val().trim();
@@ -52,10 +70,13 @@ function captureSearch() {
           // console.log(search2);
           // console.log(searchDate);
           // console.log(activitiesString);
+          //now pass to Firebase
+          dbPush(search2, activitiesString);
           //now pass to Recreation API
           findRecAreas(search2, activitiesString);
           
 };
+
 
 function findRecAreas(var1, var2) {
           //FUNCTION: to take values from the captureSearch() function and pass to recreation API and save JSON object results as a global variable
@@ -98,6 +119,7 @@ function findRecAreas(var1, var2) {
   
 };
 
+
 function buildAccordian () {
           //FUNCTION: to take the results from the findRecAreas() function and loop through each item in the array to build main Accordian content
           //NOTES: basic format of HTML is as follows
@@ -111,7 +133,6 @@ function buildAccordian () {
           
           //disabled for now to simply hard code for first 10 results
           // var arrayCount = recAreas.length;
-          console.log(length);
           for (var i = 0; i < 10; i++) {
             
             var name = recAreas[i].FacilityName;
@@ -135,6 +156,18 @@ function buildAccordian () {
 };
 
 
+function dbPush(q, s) {
+          // Code for handling the push
+          database.ref().push({
+          query: q,
+          activitiesString: s,
+          dateAdded: firebase.database.ServerValue.TIMESTAMP
+
+          });
+}
+
+
+//************************************ */
 //DOCUMENT CALLS
 $(document).ready(function(){
   //initial search value on page load

@@ -8,7 +8,7 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        height: 50%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -20,50 +20,134 @@
   </head>
   <body>
     <div id="map"></div>
+    <div>
+      <button id="find">Find Other Trails!</button>
+    </div>
+    <div>
+      <button id="genMap">GenMap</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
-      var map, infoWindow;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 6
-        });
-        infoWindow = new google.maps.InfoWindow;
+      var map, marker;
+      var markers = [];
+      var infowindow;
+      var lat = 39.994118;
+      var lng = -105.633991;
+      // function initMap() {
+      //   map = new google.maps.Map(document.getElementById('map'), {
+      //     center: {lat: 39.8283, lng: -98.5795},
+      //     zoom: 4
+      //   });
+      //   marker = new google.maps.Marker;
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+      //   // Try HTML5 geolocation.
+      //   if (navigator.geolocation) {
+      //     navigator.geolocation.getCurrentPosition(function(position) {
+      //       var pos = {
+      //         lat: position.coords.latitude,
+      //         lng: position.coords.longitude
+      //       };
+      //       console.log(pos)
+      //       lat = pos.lat;
+      //       lng = pos.lng
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
+      //       marker.setPosition(pos);
+      //       marker.setMap(map);
+      //       map.setCenter(pos);
+      //       map.setZoom(10);
+      //     }, function() {
+      //       handleLocationError(true, infoWindow, map.getCenter());
+      //     });
+      //   } else {
+      //     // Browser doesn't support Geolocation
+      //     handleLocationError(false, infoWindow, map.getCenter());
+      //   }
+      // }
+
+      // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      //   infoWindow.setPosition(pos);
+      //   infoWindow.setContent(browserHasGeolocation ?
+      //                         'Error: The Geolocation service failed.' :
+      //                         'Error: Your browser doesn\'t support geolocation.');
+      //   infoWindow.open(map);
+      // }
+
+      function findTrails() {
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: {lat: lat, lng: lng},
+          radius: 10000,
+          name: ['hiking trail']
+        }, callback);
+
+        function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
         }
       }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+        });
+        markers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+          var info = place.name + "  " + place.geometry.location
+          infowindow.setContent(info);
+          infowindow.open(map, this);
+        });
       }
+    }
+      
+      function showMap () {
+
+        lat = lat;
+        lng = lng;
+
+        var place = {lat: lat, lng: lng}
+
+        var mapOptions = {
+	      center: place,
+        zoom: 10
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        marker = new google.maps.Marker({position: place, map: map});
+
+      }
+
+      $(document).ready(function() {
+        $("#genMap").on("click", showMap)
+       .then($("#find").on("click", findTrails))
+
+      })
+
+ 
+       
+
+
+      // })
+
+
+
+      
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC26lHDVfUgIaz3ccpR6pfQ2RrvGgnKOuw&callback=initMap">
+    type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC26lHDVfUgIaz3ccpR6pfQ2RrvGgnKOuw&libraries=places&callback=initMap">
     </script>
+
   </body>
 </html>

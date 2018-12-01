@@ -174,6 +174,9 @@ function buildAccordian () {
             // var longitude = recAreas[i].FacilityLongitude;
             // var mainRow = $("<div>").attr({"class": "row"})
             // var mainRowCol = $("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description))
+            var star = $("<i>").attr({"class": "material-icons"}).html("star-border");
+            var heading = $("<span>").html(name);
+
             var moreButton = $("<div>").append(
               $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
             )
@@ -189,7 +192,8 @@ function buildAccordian () {
           
             var newList = $("<li>").attr("id", i).append(
               //needs to add star icons still
-              $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).html(name),
+              //<i class="material-icons" >star_border</i>The Loch Trail
+              $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).append(star, heading),
               $("<div>").attr({"class": "collapsible-body"}).append(
                   containerRow,
                   $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),

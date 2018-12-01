@@ -15,6 +15,14 @@
 header {
     background-image: url("../images/banner-2.jpg");
     height: 25%;
+    background-repeat: no-repeat;
+}
+
+.header-logo {
+    display: block;
+    width: 300px;
+    margin: auto;
+    padding-top: 2rem;
 }
 
 /* added for recreation API results to not be so giagantic! */
@@ -23,3 +31,58 @@ h2 {
     margin-top: 1.5rem;
     margin-bottom: .5rem;
 }
+
+
+/* Kelsey Additions */
+.nav-wrapper {
+    background-color: #2a2b32 !important;
+}
+
+.boxes {
+    margin: 50px;
+    float: left;
+    width: 650px;
+    height: 487;
+    border-radius: 10px;
+}
+
+.tab-titles{
+    font-family: 'Arimo', sans-serif;
+    font-size: 25px;
+    padding: 5px;
+}
+
+.tab-buttons{
+    background-color: #f25939;
+    font-display: white;
+    font-family: 'Arimo', sans-serif;
+    margin: 10px;
+}
+
+blockquote {
+    font-family: 'Arimo', sans-serif;
+    font-size: 20px;
+    border-left: 5px solid #f25939 !important;
+}
+
+.material-icons:hover {
+    color: #ccc;
+}
+
+.icons:hover {
+    opacity: 40%;
+}
+
+@media screen and (max-width: 600px) {
+    #box-info {
+      width: 500px;
+      height: 400px;
+      align-content: center;
+      margin: 5px;
+      padding: 25px;
+  }
+
+  @media screen and (max-width: 600px) {
+    #banner {
+      height: 0%;
+  }

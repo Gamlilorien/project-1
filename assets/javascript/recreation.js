@@ -179,7 +179,8 @@ function buildAccordian () {
             )
             var containerRow = $("<div>").attr({"class": "row"}).append(
               $("<div>").attr({"class": "col l6"}).append(
-                $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"})),
+                $("<div>").attr({"class": "genMap", "id": "map"}).append($("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"}))
+                 ),
               
               $("<div>").attr({"class": "col l6"}).append(
                 $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/weather-ex.jpg"})

@@ -127,6 +127,34 @@ function buildAccordian () {
             //   <div class="collapsible-header">Browns Canyon National Monument</div>
             //   <div class="collapsible-body"><span>Browns Canyon National Monument , a 21,586 acres (8,736 ha) national monument in Chaffee County, Colorado was designated as such by President Barack Obama under the Antiquities Act on February 19, 2015.</span></div>
             // </li>
+
+          //**** NEW FORMAT */
+          // <li>
+          //     <div class="collapsible-header tab-titles" id="starColor"><i class="material-icons" >star_border</i>The Loch Trail</div>
+          //        <div class="collapsible-body">
+          //            <div class="row">
+          //                <div class="col l12">
+                    //             <!-- Where park info/description will appear -->
+                    //             <blockquote>
+                    //                 The hike to The Loch begins from the Glacier Gorge Trailhead, located on Bear Lake Road almost 8 miles from the turn-off at Highway 36. Due to the extreme popularity of the Bear Lake Road area you may want to consider using the free park shuttle to access the trailhead during peak season.
+                    //               Roughly one-quarter of a mile from the parking area, just after crossing Chaos Creek, the trail briefly converges with the Glacier Creek Trail. After walking a very short distance the Glacier Creek Trail splits off to the right and heads toward Bear Lake. To continue on towards The Loch hikers should turn left at this junction.
+                                  
+                    //               alberta-fallsAt just over eight-tenths of a mile hikers will reach Alberta Falls, one of the more popular hiking destinations in Rocky Mountain National Park. This scenic 30-foot waterfall thunders down a small gorge on Glacier Creek, and is named after Alberta Sprague, the wife of Abner Sprague, one of the first settlers in the Estes Park area.
+                    //             </blockquote>
+                    //             <!-- Button for opening a new window for info -->
+                    //             <div>
+                    //               <a class="waves-effect waves-light btn tab-buttons right"><i class="material-icons right">chevron_right</i>Learn More</a>
+                    //             </div>
+          //                </div>
+          //            </div>
+
+          //       <div class="row">
+          //             <div class="col l12">
+          //                 <img class="materialboxed boxes" id="box-info" src="Untitled.png">
+          //                 <img class="materialboxed boxes" id="box-info" src="weather-ex.jpg">
+          //             </div>
+          //     </div>
+          // </li>
           
           //FIRST - remove previous results (if any)
           $("#accordian").html("");
@@ -144,10 +172,34 @@ function buildAccordian () {
             // var facilityID = recAreas[i].FacilityID;
             // var latitude = recAreas[i].FacilityLatitude;
             // var longitude = recAreas[i].FacilityLongitude;
+            // var mainRow = $("<div>").attr({"class": "row"})
+            // var mainRowCol = $("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description))
+            var star = $("<i>").attr({"class": "material-icons"}).html("star-border");
+            var heading = $("<span>").html(name);
 
+            var moreButton = $("<div>").append(
+              $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
+            )
+            var containerRow = $("<div>").attr({"class": "row"}).append(
+              $("<div>").attr({"class": "col l6"}).append(
+                $("<div>").attr({"class": "genMap", "id": "map"}).append($("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"}))
+                 ),
+              
+              $("<div>").attr({"class": "col l6"}).append(
+                $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/weather-ex.jpg"})
+              )
+            )
+          
             var newList = $("<li>").attr("id", i).append(
-              $("<div>").attr({"class": "collapsible-header"}).html(name),
-              $("<div>").attr({"class": "collapsible-body"}).html(description)
+              //needs to add star icons still
+              //<i class="material-icons" >star_border</i>The Loch Trail
+              $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).append(star, heading),
+              $("<div>").attr({"class": "collapsible-body"}).append(
+                  containerRow,
+                  $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
+                  $("<div>").attr({"id": "map"}),
+                  //$("<button>").attr({"id": "genMap"}).html("Get Map")
+                )
             )
 
           $("#accordian").append(newList);

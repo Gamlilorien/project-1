@@ -39,10 +39,9 @@ h2 {
 }
 
 .boxes {
-    margin: 50px;
+    margin: auto;
+    width: 100%;
     float: left;
-    width: 650px;
-    height: 487;
     border-radius: 10px;
 }
 

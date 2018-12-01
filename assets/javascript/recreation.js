@@ -177,13 +177,21 @@ function buildAccordian () {
             var moreButton = $("<div>").append(
               $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
             )
-
+            var secondRow = $("<div>").attr({"class": "row"}).append(
+              $("<div>").attr({"class": "col l6"}).append(
+                $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"})),
+              
+              $("<div>").attr({"class": "col l6"}).append(
+                $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/weather-ex.jpg"})
+              )
+            )
+          
             var newList = $("<li>").attr("id", i).append(
               //needs to add star icons still
               $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).html(name),
               $("<div>").attr({"class": "collapsible-body"}).append(
-                  $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton))
-
+                  $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
+                  secondRow
                 )
             )
 

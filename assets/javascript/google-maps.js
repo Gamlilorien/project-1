@@ -1,5 +1,5 @@
-var map
-var marker
+var map = "";
+var marker = "";
 var infowindow;
 var lat = 39.994118;
 var lng = -105.633991;
@@ -57,7 +57,7 @@ function showMap (lat, lng) {
 
 $(document).ready(function() {
     //updated to trigger by class rather than ID since it is a repeating button
-    $(".genMap").on("click", showMap)
+    $(".genMap").on("click", showMap(lat, lng))
     // this line was causing an error, so I diabled for now JCMH
   //  .then($("#find").on("click", findTrails))
 
@@ -65,13 +65,13 @@ $(document).ready(function() {
   })
 
   //ADDED by JCMH
-$(".collapsible-header").click(function(){
-  //we need to get the lat and long as parameters
-  //to do this we will take the accordian div id#
-  var i = $("#ID");
-  console.log("click! " +i);
+// $(".collapsible-header").click(function(){
+//   //we need to get the lat and long as parameters
+//   //to do this we will take the accordian div id#
+//   var i = $("#ID");
+//   console.log("click! " +i);
 
-  var newLat = recAreas[i].FacilityLatitude;
-  var newLng = recAreas[i].FacilityLongitude;
-  showMap(newLat, newLng);
-})
+//   var newLat = recAreas[i].FacilityLatitude;
+//   var newLng = recAreas[i].FacilityLongitude;
+//   showMap(newLat, newLng);
+// })

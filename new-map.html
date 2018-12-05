@@ -4,6 +4,8 @@
     <title>Geolocation</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -19,15 +21,18 @@
     </style>
   </head>
   <body>
-    <div id="map"></div>
-    <div>
+        <div class="genMap" id="map6">
+            <img class="materialboxed boxes" src="assets/images/Untitled.png">
+        </div>
+    
       <button id="find">Find Other Trails!</button>
     </div>
     <div>
       <button id="genMap">GenMap</button>
     </div>
+    <i class="material-icons fstar">star_border</i>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
 
     <script>
       // Note: This example requires that you consent to location sharing when
@@ -112,18 +117,22 @@
 	      center: place,
         zoom: 10
         };
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        map = new google.maps.Map(document.getElementById('map6'), mapOptions);
         marker = new google.maps.Marker({position: place, map: map});
       }
       $(document).ready(function() {
         $("#genMap").on("click", showMap)
-       .then($("#find").on("click", findTrails))
+    //    .then($("#find").on("click", findTrails))
       })
  
        
       // })
       
     </script>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script type="text/javascript" src="assets/javascript/recreation.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script async defer
     type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC26lHDVfUgIaz3ccpR6pfQ2RrvGgnKOuw&libraries=places&callback=initMap">
     </script>

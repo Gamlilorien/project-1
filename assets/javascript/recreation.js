@@ -2,7 +2,8 @@
 //***************************** */
 //GLOBAL VARIABLES
 //searchDate
-//
+var lat = "";
+var lng = "";
 
 
 //***************************** */
@@ -167,22 +168,38 @@ function buildAccordian () {
             var description = recAreas[i].FacilityDescription;
             //For type, campgrounds are simply Campground, where as Facility is for everyting else...
             var type = recAreas[i].FacilityTypeDescription;
+
             
             //don't need these yet so disabled for now
             // var facilityID = recAreas[i].FacilityID;
-            // var latitude = recAreas[i].FacilityLatitude;
-            // var longitude = recAreas[i].FacilityLongitude;
+            var latitude = recAreas[i].FacilityLatitude;
+            var longitude = recAreas[i].FacilityLongitude;
+            //test
+            // var locationButton = $("<button>").attr({"class": "btn getLocation", "lat": latitude, "lng": longitude }).text("Get Location");
+
+
             // var mainRow = $("<div>").attr({"class": "row"})
             // var mainRowCol = $("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description))
-            var star = $("<i>").attr({"class": "material-icons"}).html("star-border");
+            var star = $("<i>").attr({"class": "material-icons right"}).html("star_border");
             var heading = $("<span>").html(name);
 
             var moreButton = $("<div>").append(
-              $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
+              $("<a>")
+              .attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"})
+              .html("Learn More")
+              .append($("<i>")
+              .attr({"class": "material-icons right"})
+              .html("chevron_right"))
             )
+            
+            // <a class="waves-effect waves-light btn fstar"><i class="material-icons right">star_border</i>Favorite</a>
+            var favButton =$("<a>").attr({"class": "waves-effect waves-light btn-flat fstar"})
+              .append($("<i>").attr({"class": "material-icons right"}).html("star_border"));
+
             var containerRow = $("<div>").attr({"class": "row"}).append(
-              $("<div>").attr({"class": "col l6"}).append(
-                $("<div>").attr({"class": "genMap", "id": "map"}).append($("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"}))
+              $("<div>")
+              .attr({"class": "col l6"}).append(
+                $("<div>").attr({"class": "genMap", "id": "map"+i}).append($("<img>").attr({"class": "materialboxed boxes", "src": "assets/images/Untitled.png" }))
                  ),
               
               $("<div>").attr({"class": "col l6"}).append(
@@ -190,14 +207,17 @@ function buildAccordian () {
               )
             )
           
-            var newList = $("<li>").attr("id", i).append(
+            var newList = $("<li>").attr({"id": i, "lat": latitude, "lng": longitude}).append(
               //needs to add star icons still
               //<i class="material-icons" >star_border</i>The Loch Trail
-              $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).append(star, heading),
+              $("<div>").attr({"class": "collapsible-header tab-titles"}).append(
+                $("<a>").attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons'>star_border</i>"), 
+                heading),
               $("<div>").attr({"class": "collapsible-body"}).append(
+                  
                   containerRow,
                   $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
-                  $("<div>").attr({"id": "map"}),
+                  $("<div>").attr({"id": "map"})
                   //$("<button>").attr({"id": "genMap"}).html("Get Map")
                 )
             )
@@ -207,6 +227,25 @@ function buildAccordian () {
           };
 };
 
+//see: https://api.jquery.com/has-attribute-selector/
+function getLocation() {
+    lat = $(this).attr("lat");
+    lng = $(this).attr("lng");
+    mapId = "map" +$(this).attr("id")
+    // .then(showMap(lat, lng, mapId));
+    console.log("Latitude: " +lat +" Longitude: " +lng);
+    console.log(mapId);
+};
+
+function addFavorite() {
+  //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
+  var star = $(this).attr({"class": "waves-effect waves-light btn-flat remove-fstar"}).html("<i class='material-icons right'>star</i>")
+};
+
+function unFavorite() {
+  //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
+  var star = $(this).attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons right'>star_border</i>")
+};
 
 function dbPush(q, s) {
           // Code for handling the push
@@ -227,3 +266,16 @@ $(document).ready(function(){
 });
 
 $(document).on("click", "#RecSearchButton", captureSearch);
+
+$(document).on("click", ".collapsible li", getLocation);
+
+$(document).on("click", ".fstar", addFavorite);
+
+$(document).on("click", ".remove-fstar", unFavorite);
+
+//see https://stackoverflow.com/questions/46787809/materializecss-collapsible-onopen-change-icon-of-header
+// $(".genMap").click(function() {
+//   console.log("button clicked!"),
+//   getLocation
+//   //getLocation
+// });

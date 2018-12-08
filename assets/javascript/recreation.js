@@ -1,11 +1,3 @@
-
-//***************************** */
-//GLOBAL VARIABLES
-//searchDate
-var lat = "";
-var lng = "";
-
-
 //***************************** */
 //FIREBASE
 // Initialize Firebase
@@ -19,8 +11,14 @@ var config = {
 };
 firebase.initializeApp(config);
 
+
+//***************************** */
+//GLOBAL VARIABLES
+//searchDate
 var database = firebase.database();
-console.log(database);
+// console.log(database);
+var lat = "";
+var lng = "";
 
 
 //*************************** */
@@ -72,7 +70,7 @@ function captureSearch() {
           // console.log(searchDate);
           // console.log(activitiesString);
           //now pass to Firebase
-          dbPush(search2, activitiesString);
+          // dbPush(search2, activitiesString);
           //now pass to Recreation API
           findRecAreas(search2, activitiesString);
           
@@ -111,10 +109,10 @@ function findRecAreas(var1, var2) {
       $.ajax(settings).done(function (response) {
         recAreas = response.RECDATA;
         console.log(recAreas);
-
         //now set results into HTML as accordian object
         //it needs to be here so it ONLY triggers after API call finishes
         buildAccordian();
+        dbRec(recAreas);
       });
       
   
@@ -185,7 +183,7 @@ function buildAccordian () {
 
             var moreButton = $("<div>").append(
               $("<a>")
-              .attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"})
+              .attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "details.html"})
               .html("Learn More")
               .append($("<i>")
               .attr({"class": "material-icons right"})
@@ -231,25 +229,66 @@ function buildAccordian () {
 function getLocation() {
     lat = $(this).attr("lat");
     lng = $(this).attr("lng");
-    mapId = "map" +$(this).attr("id")
-    // .then(showMap(lat, lng, mapId));
+    id = $(this).attr("id")
+
     console.log("Latitude: " +lat +" Longitude: " +lng);
-    console.log(mapId);
+    // console.log(mapId);
+    //now save to firebase so it can presist between pages
+    // var cLocation = {
+    //   id: id,
+    //   lat: lat,
+    //   lng: lng
+    // };
+    // database.ref().push(cLocation);
+    //.set will update existing values
+    database.ref().set({
+      recAreas: recAreas,
+      lat: lat,
+      lng: lng,
+      id: id
+    });
+    console.log(database);
+
 };
+
+//we need a way to later select this info stored in Firebase
+//this code loads info stored in FireBase as a JS Global variable on page load
+database.ref().on("child_added", function(childSnapshot) {
+  //This grabs the info from Firebase as a usable value
+  //Now we save as a variable
+  recAreas = childSnapshot.val();
+  console.log(recAreas);
+
+  buildAccordian();
+  // var name = childSnapshot.val().recAreas[0].FacilityName;
+  //var lng = childSnapshot.val().recAreas.FacilityLongitude;
+
+  // console.log("yeah: " +name)
+
+});
+
+// function writeUserData(userId, name) {
+//   database.ref('users/' + userId).set({
+//     username: name
+//   });
+//   //save as local variable
+//   user = database.ref("./users/Jess123")
+// }
 
 function addFavorite() {
   //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
-  var star = $(this).attr({"class": "waves-effect waves-light btn-flat remove-fstar"}).html("<i class='material-icons right'>star</i>")
+  $(this).attr({"class": "waves-effect waves-light btn-flat remove-fstar"}).html("<i class='material-icons right'>star</i>")
 };
 
 function unFavorite() {
   //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
-  var star = $(this).attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons right'>star_border</i>")
+  $(this).attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons right'>star_border</i>")
 };
+
 
 function dbPush(q, s) {
           // Code for handling the push
-          database.ref().push({
+          database.ref().set({
           query: q,
           activitiesString: s,
           dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -257,13 +296,22 @@ function dbPush(q, s) {
           });
 }
 
+function dbRec(obj) {
+          database.ref().set({
+            recAreas: obj
+          })
+}
+
 
 //************************************ */
 //DOCUMENT CALLS
-$(document).ready(function(){
+// $(document).ready(function(){
   //initial search value on page load
-    findRecAreas("Denver", "HIKING")
-});
+  // findRecAreas("Denver", "HIKING")
+  //writeUserData("Jess123", "Jesse Howard")
+  //want it to populate from latest Firebase results NOT hard-coded value
+  // buildAccordian();
+// });
 
 $(document).on("click", "#RecSearchButton", captureSearch);
 

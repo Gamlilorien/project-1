@@ -1,10 +1,3 @@
-
-//***************************** */
-//GLOBAL VARIABLES
-//searchDate
-//
-
-
 //***************************** */
 //FIREBASE
 // Initialize Firebase
@@ -18,8 +11,14 @@ var config = {
 };
 firebase.initializeApp(config);
 
+
+//***************************** */
+//GLOBAL VARIABLES
+//searchDate
 var database = firebase.database();
-console.log(database);
+// console.log(database);
+var lat = "";
+var lng = "";
 
 
 //*************************** */
@@ -71,7 +70,7 @@ function captureSearch() {
           // console.log(searchDate);
           // console.log(activitiesString);
           //now pass to Firebase
-          dbPush(search2, activitiesString);
+          // dbPush(search2, activitiesString);
           //now pass to Recreation API
           findRecAreas(search2, activitiesString);
           
@@ -110,10 +109,10 @@ function findRecAreas(var1, var2) {
       $.ajax(settings).done(function (response) {
         recAreas = response.RECDATA;
         console.log(recAreas);
-
         //now set results into HTML as accordian object
         //it needs to be here so it ONLY triggers after API call finishes
         buildAccordian();
+        dbRec(recAreas);
       });
       
   
@@ -167,22 +166,38 @@ function buildAccordian () {
             var description = recAreas[i].FacilityDescription;
             //For type, campgrounds are simply Campground, where as Facility is for everyting else...
             var type = recAreas[i].FacilityTypeDescription;
+
             
             //don't need these yet so disabled for now
             // var facilityID = recAreas[i].FacilityID;
-            // var latitude = recAreas[i].FacilityLatitude;
-            // var longitude = recAreas[i].FacilityLongitude;
+            var latitude = recAreas[i].FacilityLatitude;
+            var longitude = recAreas[i].FacilityLongitude;
+            //test
+            // var locationButton = $("<button>").attr({"class": "btn getLocation", "lat": latitude, "lng": longitude }).text("Get Location");
+
+
             // var mainRow = $("<div>").attr({"class": "row"})
             // var mainRowCol = $("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description))
-            var star = $("<i>").attr({"class": "material-icons"}).html("star-border");
+            var star = $("<i>").attr({"class": "material-icons right"}).html("star_border");
             var heading = $("<span>").html(name);
 
             var moreButton = $("<div>").append(
-              $("<a>").attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "test-googlemapsapi.html", "target": "_blank"}).html("Learn More").append($("<i>").attr({"class": "material-icons right"}).html("chevron_right"))
+              $("<a>")
+              .attr({"class": "waves-effect waves-light btn tab-buttons right", "href": "details.html"})
+              .html("Learn More")
+              .append($("<i>")
+              .attr({"class": "material-icons right"})
+              .html("chevron_right"))
             )
+            
+            // <a class="waves-effect waves-light btn fstar"><i class="material-icons right">star_border</i>Favorite</a>
+            var favButton =$("<a>").attr({"class": "waves-effect waves-light btn-flat fstar"})
+              .append($("<i>").attr({"class": "material-icons right"}).html("star_border"));
+
             var containerRow = $("<div>").attr({"class": "row"}).append(
-              $("<div>").attr({"class": "col l6"}).append(
-                $("<div>").attr({"class": "genMap", "id": "map"}).append($("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/Untitled.png"}))
+              $("<div>")
+              .attr({"class": "col l6"}).append(
+                $("<div>").attr({"class": "genMap", "id": "map"+i}).append($("<img>").attr({"class": "materialboxed boxes", "src": "assets/images/Untitled.png" }))
                  ),
               
               $("<div>").attr({"class": "col l6"}).append(
@@ -190,14 +205,17 @@ function buildAccordian () {
               )
             )
           
-            var newList = $("<li>").attr("id", i).append(
+            var newList = $("<li>").attr({"id": i, "lat": latitude, "lng": longitude}).append(
               //needs to add star icons still
               //<i class="material-icons" >star_border</i>The Loch Trail
-              $("<div>").attr({"class": "collapsible-header tab-titles", "id": "starColor"}).append(star, heading),
+              $("<div>").attr({"class": "collapsible-header tab-titles"}).append(
+                $("<a>").attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons'>star_border</i>"), 
+                heading),
               $("<div>").attr({"class": "collapsible-body"}).append(
+                  
                   containerRow,
                   $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
-                  $("<div>").attr({"id": "map"}),
+                  $("<div>").attr({"id": "map"})
                   //$("<button>").attr({"id": "genMap"}).html("Get Map")
                 )
             )
@@ -207,10 +225,70 @@ function buildAccordian () {
           };
 };
 
+//see: https://api.jquery.com/has-attribute-selector/
+function getLocation() {
+    lat = $(this).attr("lat");
+    lng = $(this).attr("lng");
+    id = $(this).attr("id")
+
+    console.log("Latitude: " +lat +" Longitude: " +lng);
+    // console.log(mapId);
+    //now save to firebase so it can presist between pages
+    // var cLocation = {
+    //   id: id,
+    //   lat: lat,
+    //   lng: lng
+    // };
+    // database.ref().push(cLocation);
+    //.set will update existing values
+    database.ref().set({
+      recAreas: recAreas,
+      lat: lat,
+      lng: lng,
+      id: id
+    });
+    console.log(database);
+
+};
+
+//we need a way to later select this info stored in Firebase
+//this code loads info stored in FireBase as a JS Global variable on page load
+database.ref().on("child_added", function(childSnapshot) {
+  //This grabs the info from Firebase as a usable value
+  //Now we save as a variable
+  recAreas = childSnapshot.val();
+  console.log(recAreas);
+
+  buildAccordian();
+  // var name = childSnapshot.val().recAreas[0].FacilityName;
+  //var lng = childSnapshot.val().recAreas.FacilityLongitude;
+
+  // console.log("yeah: " +name)
+
+});
+
+// function writeUserData(userId, name) {
+//   database.ref('users/' + userId).set({
+//     username: name
+//   });
+//   //save as local variable
+//   user = database.ref("./users/Jess123")
+// }
+
+function addFavorite() {
+  //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
+  $(this).attr({"class": "waves-effect waves-light btn-flat remove-fstar"}).html("<i class='material-icons right'>star</i>")
+};
+
+function unFavorite() {
+  //"<a class='waves-effect waves-light btn remove-fstar'><i class='material-icons right'>sstar</i>Remove Favorite</a>"
+  $(this).attr({"class": "waves-effect waves-light btn-flat fstar"}).html("<i class='material-icons right'>star_border</i>")
+};
+
 
 function dbPush(q, s) {
           // Code for handling the push
-          database.ref().push({
+          database.ref().set({
           query: q,
           activitiesString: s,
           dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -218,12 +296,34 @@ function dbPush(q, s) {
           });
 }
 
+function dbRec(obj) {
+          database.ref().set({
+            recAreas: obj
+          })
+}
+
 
 //************************************ */
 //DOCUMENT CALLS
-$(document).ready(function(){
+// $(document).ready(function(){
   //initial search value on page load
-    findRecAreas("Denver", "HIKING")
-});
+  // findRecAreas("Denver", "HIKING")
+  //writeUserData("Jess123", "Jesse Howard")
+  //want it to populate from latest Firebase results NOT hard-coded value
+  // buildAccordian();
+// });
 
 $(document).on("click", "#RecSearchButton", captureSearch);
+
+$(document).on("click", ".collapsible li", getLocation);
+
+$(document).on("click", ".fstar", addFavorite);
+
+$(document).on("click", ".remove-fstar", unFavorite);
+
+//see https://stackoverflow.com/questions/46787809/materializecss-collapsible-onopen-change-icon-of-header
+// $(".genMap").click(function() {
+//   console.log("button clicked!"),
+//   getLocation
+//   //getLocation
+// });

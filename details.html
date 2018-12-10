@@ -1,0 +1,186 @@
+<!DOCTYPE html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+    <title>Location Details</title>
+
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      div.m12 {
+        margin: 0 2rem 3rem 2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header>
+        <img class="header-logo" src="assets/images/transparent_logo.png">
+      </header>
+      
+  
+      <!-- Nav Bar -->
+      <nav>
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Location Details</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="index.html"><i class="material-icons">home</i></a></li>
+              <li><a href="account.html"><i class="material-icons">account_circle</i></a></li>
+            </ul>
+          </div>
+        </nav>
+      
+      <!-- This is the menu side nav on mobile -->
+        <ul class="sidenav text" id="mobile-demo">
+          <li class="active"><a href="index.html"><i class="material-icons">home</i>Home</a></li>
+          <li><a href="account.html"><i class="material-icons">account_circle</i>Account</a></li>
+        </ul>
+    
+
+      <!-- BEGIN GOOGLE MAP -->
+        <div id="map"></div>
+          <div>
+            <button id="find">Find Other Trails!</button>
+          </div>
+          <div>
+            <button id="genMap">GenMap</button>
+        </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="col m12">
+
+        <h3 id="title"></h3>
+        <div id="description"></div>
+      <!-- END MAIN CONTENT -->
+      </div>
+
+    <!-- JavaScript Links go here -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/layout.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script type="text/javascript" src="assets/javascript/weather-api.js"></script>
+    <!-- <script type="text/javascript" src="assets/javascript/recreation.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+      //FIREBASE
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDLWK0AgV3ynxApEe74ywNZQM7HEV_-IcM",
+        authDomain: "hiking-trails-222819.firebaseapp.com",
+        databaseURL: "https://hiking-trails-222819.firebaseio.com",
+        projectId: "hiking-trails-222819",
+        storageBucket: "hiking-trails-222819.appspot.com",
+        messagingSenderId: "172585916997"
+      };
+      firebase.initializeApp(config);
+
+      var database = firebase.database();
+
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map, marker;
+      var markers = [];
+      var infowindow;
+      var lat = 39.994118;
+      var lng = -105.633991;
+      
+      var id = "";
+      
+
+      function findTrails() {
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: {lat: lat, lng: lng},
+          radius: 10000,
+          name: ['hiking trail']
+        }, callback);
+        function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      }
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function() {
+          var info = place.name + "  " + place.geometry.location
+          infowindow.setContent(info);
+          infowindow.open(map, this);
+        });
+      }
+    }
+      
+      function showMap () {
+        lat = lat;
+        lng = lng;
+        var place = {lat: lat, lng: lng}
+        var mapOptions = {
+	      center: place,
+        zoom: 10
+        };
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        marker = new google.maps.Marker({position: place, map: map});
+      }
+      $(document).ready(function() {
+        
+        $("#genMap").on("click", showMap)
+       .then($("#find").on("click", findTrails))
+      })
+ 
+       
+      //we need a way to later select this info stored in Firebase
+      //this code loads info stored in FireBase as a JS Global variable on page load
+      database.ref().once("value").then(function(snapshot) {
+        //This grabs the info from Firebase as a usable value
+        //Now we save as a variable
+        results = snapshot.val();
+        console.log(results);
+
+        lat = parseFloat(results.lat);
+        lng = parseFloat(results.lng);
+        id = results.id;
+        title = results.recAreas[id].FacilityName;
+        description = results.recAreas[id].FacilityDescription;
+        //now insert in HTML and show map
+        showMap();
+        $("#title").html(title);
+        $("#description").html(description);
+        
+      });
+      
+    </script>
+    <script async defer
+    type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC26lHDVfUgIaz3ccpR6pfQ2RrvGgnKOuw&libraries=places&callback=initMap">
+    </script>
+
+  </body>
+</html>

@@ -4,6 +4,9 @@
   var lng 
   console.log("lat", lat, "lng", lng)
 
+  //updated to treat as a function requireing two arguments or parameters (ie lat and lng).
+  //This way, the function only gets called when ready (ie when we have the desired lat and lng coordiates)
+  function getWeather (lat, lng) {
   var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&units=imperial&appid=9eabcaeeafc5beb1cdf26fdd62664be2";
 
   $.ajax({
@@ -20,10 +23,11 @@
     var iconImg = "http://openweathermap.org/img/w/" + iconCode + ".png"
     console.log(iconImg);
     
-
-    $("#temperature").html(temperature);
-    $("#weather-desc").html(desc);
-    $("#weather-icon").html("src=" + iconImg);
+    //Slight changes to visual purposes
+    $("#temperature").html(temperature +" °F");
+    //Removed this to include as the icon alt, and a title for when a user hovers over it
+    // $("#weather-desc").html(desc);
+    $("#weather-icon").attr({"src": iconImg, "alt": desc, "title": desc});
 
     // I wanted to organize these by condition but ran out of time, will do so at a later date
     switch(results.weather[0].icon) {
@@ -201,6 +205,5 @@
     }
 
   });
-
-
+};
 

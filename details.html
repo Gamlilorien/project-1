@@ -23,6 +23,9 @@
         margin: 0;
         padding: 0;
       }
+      div.m12 {
+        margin: 0 2rem 3rem 2rem;
+      }
     </style>
   </head>
 
@@ -51,9 +54,7 @@
           <li class="active"><a href="index.html"><i class="material-icons">home</i>Home</a></li>
           <li><a href="account.html"><i class="material-icons">account_circle</i>Account</a></li>
         </ul>
-      
-      <!-- MAIN CONTENT -->
-      <div class="col m12">
+    
 
       <!-- BEGIN GOOGLE MAP -->
         <div id="map"></div>
@@ -64,6 +65,11 @@
             <button id="genMap">GenMap</button>
         </div>
 
+      <!-- MAIN CONTENT -->
+      <div class="col m12">
+
+        <h3 id="title"></h3>
+        <div id="description"></div>
       <!-- END MAIN CONTENT -->
       </div>
 
@@ -99,9 +105,8 @@
       var infowindow;
       var lat = 39.994118;
       var lng = -105.633991;
-      // var lat = localStorage.getItem("lat");
-      // var lng ; parseFloat(localStorage.getItem("lat"));
-      console.log("lat: " +lat +" lng: " +lng)
+      
+      var id = "";
       
 
       function findTrails() {
@@ -146,7 +151,7 @@
         marker = new google.maps.Marker({position: place, map: map});
       }
       $(document).ready(function() {
-        showMap();
+        
         $("#genMap").on("click", showMap)
        .then($("#find").on("click", findTrails))
       })
@@ -154,15 +159,22 @@
        
       //we need a way to later select this info stored in Firebase
       //this code loads info stored in FireBase as a JS Global variable on page load
-      database.ref().on("child_added", function(snapshot) {
+      database.ref().once("value").then(function(snapshot) {
         //This grabs the info from Firebase as a usable value
         //Now we save as a variable
         results = snapshot.val();
         console.log(results);
-        // var placeByID = snapshot.val().id;
-        // console.log("id: " +placeById)
-        // nlat = childSnapshot.val().lat;
-        // nlng = results[2];
+
+        lat = parseFloat(results.lat);
+        lng = parseFloat(results.lng);
+        id = results.id;
+        title = results.recAreas[id].FacilityName;
+        description = results.recAreas[id].FacilityDescription;
+        //now insert in HTML and show map
+        showMap();
+        $("#title").html(title);
+        $("#description").html(description);
+        
       });
       
     </script>

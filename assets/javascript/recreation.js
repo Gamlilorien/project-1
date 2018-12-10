@@ -194,16 +194,16 @@ function buildAccordian () {
             var favButton =$("<a>").attr({"class": "waves-effect waves-light btn-flat fstar"})
               .append($("<i>").attr({"class": "material-icons right"}).html("star_border"));
 
-            var containerRow = $("<div>").attr({"class": "row"}).append(
-              $("<div>")
-              .attr({"class": "col l6"}).append(
-                $("<div>").attr({"class": "genMap", "id": "map"+i}).append($("<img>").attr({"class": "materialboxed boxes", "src": "assets/images/Untitled.png" }))
-                 ),
+            // var containerRow = $("<div>").attr({"class": "row"}).append(
+            //   $("<div>")
+            //   .attr({"class": "col l6"}).append(
+            //     $("<div>").attr({"class": "genMap", "id": "map"+i}).append($("<img>").attr({"class": "materialboxed boxes", "src": "assets/images/Untitled.png" }))
+            //      ),
               
-              $("<div>").attr({"class": "col l6"}).append(
-                $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/weather-ex.jpg"})
-              )
-            )
+            //   $("<div>").attr({"class": "col l6"}).append(
+            //     $("<img>").attr({"class": "materialboxed boxes", "id": "box-info", "src": "assets/images/weather-ex.jpg"})
+            //   )
+            // )
           
             var newList = $("<li>").attr({"id": i, "lat": latitude, "lng": longitude}).append(
               //needs to add star icons still
@@ -213,7 +213,7 @@ function buildAccordian () {
                 heading),
               $("<div>").attr({"class": "collapsible-body"}).append(
                   
-                  containerRow,
+                  //containerRow,
                   $("<div>").attr({"class": "row"}).append($("<div>").attr({"class": "col l12"}).append($("<blockquote>").html(description),moreButton)),
                   $("<div>").attr({"id": "map"})
                   //$("<button>").attr({"id": "genMap"}).html("Get Map")

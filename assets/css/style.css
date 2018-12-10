@@ -72,6 +72,24 @@ blockquote {
     opacity: 40%;
 }
 
+.avatar {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    margin-top: 75px;
+
+}
+
+#user-name {
+    font-family: 'Arimo', sans-serif;
+    font-size: 35px;
+    margin: 10px;
+}
+
+.favs {
+    margin-top: 85px;
+}
+
 @media screen and (max-width: 600px) {
     #box-info {
       width: 500px;

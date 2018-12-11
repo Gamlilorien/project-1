@@ -7,7 +7,7 @@
   //updated to treat as a function requireing two arguments or parameters (ie lat and lng).
   //This way, the function only gets called when ready (ie when we have the desired lat and lng coordiates)
   function getWeather (lat, lng) {
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&units=imperial&appid=9eabcaeeafc5beb1cdf26fdd62664be2";
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&units=imperial&appid=9eabcaeeafc5beb1cdf26fdd62664be2";
 
   $.ajax({
     url: queryURL,

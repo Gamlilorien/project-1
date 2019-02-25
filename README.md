@@ -1,7 +1,7 @@
 # **TrailBlazer**
 
 ![project-1](assets/images/project-screenshot.png)
-
+[View Demo](https://gamlilorien.github.io/project-1/).
 ### Purpose
 Our application helps people who want to go on a hike find nearby trails and information about them.  We ended up having the idea to create TrailBlazer because all of us enjoyed hiking, but realized that there isn't really anywhere you can go to get a bunch of info about trails.  Sure, that info is out there, but you'd have to go through several sources to find it.  This prompted us to create a "one stop shop" for all of it. 
 
